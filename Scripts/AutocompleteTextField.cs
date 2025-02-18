@@ -3,20 +3,24 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ExtendedUI
+namespace ExtendedUiToolkit
 {
-    public class AutocompleteTextField : VisualElement
+	[UxmlElement]
+    public partial class AutocompleteTextField : VisualElement
     {
         private TextField textField;
         public TextField TextField => textField;
         private ScrollView suggestionsContainer;
+     
+        [UxmlAttribute]
         private List<string> suggestionsList = new List<string>();
         private List<string> currentSuggestions = new List<string>();
+      
+        [UxmlAttribute]
         private int maxSuggestionsToShow = 5;
         private int selectedSuggestionIndex = -1;
 
         private bool hasFocus;
-        public new class UxmlFactory : UxmlFactory<AutocompleteTextField, UxmlTraits> { }
 
         public AutocompleteTextField()
         {
@@ -194,7 +198,6 @@ namespace ExtendedUI
             textField.value = currentSuggestions[index];
             suggestionsContainer.style.display = DisplayStyle.None;
         }
-        
       
     }
 }

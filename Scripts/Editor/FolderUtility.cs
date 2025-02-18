@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace ExtendedUI.Editor
+namespace ExtendedUiToolkit.Editor
 {
 	public static class FolderUtility
 	{

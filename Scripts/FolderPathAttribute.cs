@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ExtendedUI
+namespace ExtendedUiToolkit
 {
 	public class FolderPathAttribute : PropertyAttribute
 	{

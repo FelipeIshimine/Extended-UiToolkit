@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
 
-namespace ExtendedUI.Editor
+namespace ExtendedUiToolkit.Editor
 {
 	[CustomPropertyDrawer(typeof(FolderPathAttribute))]
 	public class FolderPathPropertyDrawer : PropertyDrawer

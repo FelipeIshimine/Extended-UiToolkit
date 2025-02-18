@@ -5,7 +5,7 @@ using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ExtendedUI.Editor
+namespace ExtendedUiToolkit.Editor
 {
 	public class FolderSelectorElement : VisualElement
 	{
