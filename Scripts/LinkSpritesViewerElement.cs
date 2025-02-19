@@ -7,14 +7,17 @@ namespace ExtendedUiToolkit
 	[UxmlElement]
 	public partial class LinkSpritesViewerElement : VisualElement
 	{
+		public const string NAME = "SritesViewer";
+			
 		[UxmlAttribute]
 		public BackgroundSizeType imageSizeType { get; set; } = BackgroundSizeType.Contain;
 
-		public List<SpriteInfo> sprites { get; set; }= new();
+		private List<SpriteInfo> sprites { get; }= new();
 	
 		private int currentIndex = 0;
-		private Button centerButton;
 		private Image buttonImage;
+		
+		private Button centerButton;
 		private Button nextButton;
 		private Button prevButton;
     
@@ -24,9 +27,7 @@ namespace ExtendedUiToolkit
 		[UxmlAttribute]
 		public float timerDuration { get; set; }= 0f; // 0 means no timer
 		private float currentTimer = 0f;
-    
-		[UxmlAttribute]
-		public bool looping { get; set; }= true; // Option for looping
+		private VisualElement dotsContainer;
 
 		public LinkSpritesViewerElement()
 		{
@@ -36,7 +37,6 @@ namespace ExtendedUiToolkit
 
 		private void Init()
 		{
-			
 			style.alignContent = Align.Stretch;
 			style.alignSelf = Align.Stretch;
 			style.justifyContent = Justify.SpaceBetween;
@@ -45,14 +45,24 @@ namespace ExtendedUiToolkit
 	    
 			prevButton = new Button(PrevImage)
 			{
+				name = $"{NAME}Prev",
 				text = "\u25c0",
 				style = { alignSelf = Align.Center}
 			};
 			this.Add(prevButton);
 
+			VisualElement centerContainer = new VisualElement()
+			{
+				style =
+				{
+					flexGrow = 1,
+				}
+			};
+			
 			// Initialize the image element
 			centerButton = new Button()
 			{
+				name = $"{NAME}Center",
 				text = string.Empty,
 				style =
 				{
@@ -63,7 +73,8 @@ namespace ExtendedUiToolkit
 
 			buttonImage = new Image
 			{
-				style=
+				name = $"{NAME}Image",
+				style =
 				{
 					flexGrow = 1,
 					backgroundSize = new StyleBackgroundSize(new BackgroundSize(imageSizeType)),
@@ -77,36 +88,75 @@ namespace ExtendedUiToolkit
 					centerButton.style.marginRight =
 						centerButton.style.marginTop = 4;
 			centerButton.clicked += ()=> OnClick(buttonImage);
-			this.Add(centerButton);
+			
+			centerContainer.Add(centerButton);
+
+			CreateImagesDots();
+			
+			centerContainer.Add(CreateImagesDots());
+			
+			this.Add(centerContainer);
 
 			// Initialize buttons
 			nextButton = new Button(NextImage)
 			{
+				name = $"{NAME}Next",
 				text = "\u25b6",
 				style = { alignSelf = Align.Center}
 			};
         
 			this.Add(nextButton);
 	    
-			UpdateImage();
+			SetIndex(0);
 		}
 
-		public LinkSpritesViewerElement(List<SpriteInfo> sprites, float timerDuration = 0f, bool looping = true) : this()
+		private VisualElement CreateImagesDots()
+		{
+			dotsContainer = new VisualElement()
+			{
+				style =
+				{
+					flexDirection = FlexDirection.Row,
+					position = Position.Absolute,
+					alignSelf = Align.Stretch,
+					justifyContent = Justify.SpaceEvenly,
+					alignContent = Align.Stretch,
+					height = 32,
+					left = 0,
+					right = 0,
+					bottom = 0,
+					translate = new StyleTranslate(new Translate(Length.None(), Length.Percent(100)))
+				}
+			};
+			return dotsContainer;
+		}
+
+		public LinkSpritesViewerElement(List<SpriteInfo> sprites, float timerDuration = 0f) : this()
 		{
 			this.sprites = sprites;
 			this.timerDuration = timerDuration;
-			this.looping = looping;
 			timerEnabled = timerDuration > 0f;
 		}
 
 		// Update the image display based on the current index
-		private void UpdateImage()
+		private void SetIndex(int nextIndex)
 		{
+			if (currentIndex != -1)
+			{
+				if (dotsContainer.childCount > currentIndex)
+				{
+					dotsContainer.ElementAt(currentIndex).SetEnabled(false);
+				}
+			}
+			
+			currentIndex = nextIndex;
+
 			if (sprites.Count > 0)
 			{
 				SpriteInfo info = sprites[currentIndex];
 				buttonImage.userData = info;
 				buttonImage.style.backgroundImage = new StyleBackground(info.sprite);
+				dotsContainer.ElementAt(currentIndex).SetEnabled(true);
 			}
 		}
 
@@ -122,24 +172,22 @@ namespace ExtendedUiToolkit
 		// Handle Next button press
 		private void NextImage()
 		{
-			currentIndex++;
-			if (currentIndex >= sprites.Count)
+			if (sprites.Count == 0)
 			{
-				currentIndex = looping ? 0 : sprites.Count - 1;
+				return;
 			}
-			UpdateImage();
+			SetIndex((currentIndex + 1) % sprites.Count);
 			ResetTimer();
 		}
 
 		// Handle Prev button press
 		private void PrevImage()
 		{
-			currentIndex--;
-			if (currentIndex < 0)
+			if (sprites.Count == 0)
 			{
-				currentIndex = looping ? sprites.Count - 1 : 0;
+				return;
 			}
-			UpdateImage();
+			SetIndex((currentIndex - 1 + sprites.Count) % sprites.Count);
 			ResetTimer();
 		}
 
@@ -182,7 +230,36 @@ namespace ExtendedUiToolkit
 			currentIndex = 0;
 			sprites.Clear();
 			sprites.AddRange(list);
-			UpdateImage();
+
+			RefreshDots();
+			SetIndex(0);
+		}
+
+		private void RefreshDots()
+		{
+			dotsContainer.Clear();
+
+			for (int i = 0; i < sprites.Count; i++)
+			{
+				var dot = new VisualElement()
+				{
+					style=
+					{
+						flexGrow = 1,
+						maxHeight = 24,
+						maxWidth = 24,
+					}
+				};
+
+				dot.style.borderBottomLeftRadius =
+					dot.style.borderBottomRightRadius =
+						dot.style.borderTopLeftRadius =
+							dot.style.borderTopRightRadius = 24;
+				dot.style.backgroundColor = Color.white;
+				
+				dot.SetEnabled(false);
+				dotsContainer.Add(dot);
+			}
 		}
 	}
 
