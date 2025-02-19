@@ -7,7 +7,9 @@ namespace ExtendedUiToolkit
 	[UxmlElement]
 	public partial class LinkSpritesViewerElement : VisualElement
 	{
-		public const string NAME = "SritesViewer";
+		public const string NAME = "SpritesViewer";
+		public const string BUTTON_CLASS = "sprites-viewer-button";
+		public const string SIDE_BUTTON_CLASS = "sprites-viewer-side-button";
 			
 		[UxmlAttribute]
 		public BackgroundSizeType imageSizeType { get; set; } = BackgroundSizeType.Contain;
@@ -49,6 +51,8 @@ namespace ExtendedUiToolkit
 				text = "\u25c0",
 				style = { alignSelf = Align.Center}
 			};
+			prevButton.AddToClassList(SIDE_BUTTON_CLASS);
+			prevButton.AddToClassList(BUTTON_CLASS);
 			this.Add(prevButton);
 
 			VisualElement centerContainer = new VisualElement()
@@ -70,6 +74,7 @@ namespace ExtendedUiToolkit
 					flexGrow = 1,
 				}
 			};
+			centerButton.AddToClassList(BUTTON_CLASS);
 
 			buttonImage = new Image
 			{
@@ -104,7 +109,9 @@ namespace ExtendedUiToolkit
 				text = "\u25b6",
 				style = { alignSelf = Align.Center}
 			};
-        
+			nextButton.AddToClassList(SIDE_BUTTON_CLASS);
+			nextButton.AddToClassList(BUTTON_CLASS);
+
 			this.Add(nextButton);
 	    
 			SetIndex(0);
