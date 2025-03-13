@@ -4,6 +4,5 @@ namespace ExtendedUiToolkit
 {
 	public class FolderPathAttribute : PropertyAttribute
 	{
-		
 	}
 }

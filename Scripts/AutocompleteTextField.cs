@@ -35,8 +35,17 @@ namespace ExtendedUiToolkit
             suggestionsContainer = new ScrollView()
             {
                 name = "Suggestions",
-                mode = ScrollViewMode.Vertical
+                mode = ScrollViewMode.Vertical,
+                style =
+                {
+                    flexGrow = 1,
+                    backgroundColor = new Color(.14f,.14f,.14f,.95f)
+                }
             };
+            suggestionsContainer.style.borderBottomLeftRadius =
+                suggestionsContainer.style.borderBottomRightRadius =
+                    suggestionsContainer.style.borderTopLeftRadius =
+                        suggestionsContainer.style.borderTopRightRadius = 4;
             suggestionsContainer.style.display = DisplayStyle.None; // Hidden by default
             Add(suggestionsContainer);
 
@@ -52,7 +61,7 @@ namespace ExtendedUiToolkit
         {
 	        hasFocus = false;
             // Hide the suggestions after a short delay to register click events
-            schedule.Execute(() => suggestionsContainer.style.display = DisplayStyle.None).ExecuteLater(100);
+            schedule.Execute(DisableSuggestions).ExecuteLater(1);
         }
 
         private void OnFocusIn(FocusInEvent evt)
@@ -101,20 +110,57 @@ namespace ExtendedUiToolkit
 
             if (currentSuggestions.Count > 0)
             {
+                Add(suggestionsContainer);
                 suggestionsContainer.style.display = DisplayStyle.Flex;
 
+                var root = FindRootVisualContainer();
+                
+                root.Add(suggestionsContainer);
+
+                var textInput = textField.Q<VisualElement>("unity-text-input");
+                
+                // Convert world position to local UI position
+                Vector2 localPosition = root.WorldToLocal(new Vector2(textInput.worldBound.x, textInput.worldBound.yMax));
+                
+                // Apply absolute positioning
+                suggestionsContainer.style.position = Position.Absolute;
+                suggestionsContainer.style.left = localPosition.x;
+                suggestionsContainer.style.top = localPosition.y;
+                suggestionsContainer.style.width = textInput.worldBound.width;
+            
+                    
                 foreach (var suggestion in currentSuggestions)
                 {
                     var label = new Label(HighlightMatch(suggestion, searchText));
-                    label.RegisterCallback<ClickEvent>(evt => OnSuggestionClicked(suggestion));
+                    label.RegisterCallback<ClickEvent>(_ =>
+                    {
+                        OnSuggestionClicked(suggestion);
+                    });
                     label.style.unityTextAlign = TextAnchor.MiddleLeft;
+                    label.style.marginLeft = 6;
                     suggestionsContainer.Add(label);
                 }
             }
             else
             {
-                suggestionsContainer.style.display = DisplayStyle.None;
+                DisableSuggestions();
             }
+        }
+
+        private VisualElement FindRootVisualContainer()
+        {
+            VisualElement current = this;
+            while (current.viewDataKey != "rootVisualContainer")
+            {
+                current = current.parent;
+            }
+            return current;
+        }
+
+        private void DisableSuggestions()
+        {
+            //this.Add(suggestionsContainer);
+            suggestionsContainer.style.display = DisplayStyle.None;
         }
 
         // Highlight the matching part of the suggestion
@@ -134,7 +180,8 @@ namespace ExtendedUiToolkit
         private void OnSuggestionClicked(string suggestion)
         {
             textField.value = suggestion;
-            suggestionsContainer.style.display = DisplayStyle.None;
+            DisableSuggestions();
+
         }
 
         private void OnKeyDown(KeyDownEvent evt)
@@ -196,8 +243,9 @@ namespace ExtendedUiToolkit
         private void SetSelectedSuggestion(int index)
         {
             textField.value = currentSuggestions[index];
-            suggestionsContainer.style.display = DisplayStyle.None;
+            DisableSuggestions();
+
         }
-      
     }
 }
+
