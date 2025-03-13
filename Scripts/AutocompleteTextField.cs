@@ -46,11 +46,12 @@ namespace ExtendedUiToolkit
                 suggestionsContainer.style.borderBottomRightRadius =
                     suggestionsContainer.style.borderTopLeftRadius =
                         suggestionsContainer.style.borderTopRightRadius = 4;
+            suggestionsContainer.style.paddingBottom = 1;
             suggestionsContainer.style.display = DisplayStyle.None; // Hidden by default
             Add(suggestionsContainer);
 
             // Handle keyboard navigation
-            textField.RegisterCallback<KeyDownEvent>(OnKeyDown);
+            this.RegisterCallback<KeyDownEvent>(OnKeyDown,TrickleDown.TrickleDown);
 
             // Focus events
             this.RegisterCallback<FocusOutEvent>(OnFocusOut);
@@ -137,7 +138,10 @@ namespace ExtendedUiToolkit
                         OnSuggestionClicked(suggestion);
                     });
                     label.style.unityTextAlign = TextAnchor.MiddleLeft;
-                    label.style.marginLeft = 6;
+                    
+                    label.style.marginLeft = label.style.marginRight = 6;
+                    label.style.paddingTop = 2;
+                    
                     suggestionsContainer.Add(label);
                 }
             }
@@ -192,16 +196,19 @@ namespace ExtendedUiToolkit
             if (evt.keyCode == KeyCode.DownArrow)
             {
                 NavigateSuggestions(1);
+                evt.StopPropagation();
             }
             else if (evt.keyCode == KeyCode.UpArrow)
             {
                 NavigateSuggestions(-1);
+                evt.StopPropagation();
             }
             else if (evt.keyCode == KeyCode.Return || evt.keyCode == KeyCode.KeypadEnter)
             {
                 if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < currentSuggestions.Count)
                 {
                     SetSelectedSuggestion(selectedSuggestionIndex);
+                    evt.StopPropagation();
                 }
             }
         }
@@ -231,7 +238,7 @@ namespace ExtendedUiToolkit
                 var child = suggestionsContainer[i];
                 if (i == index)
                 {
-                    child.style.backgroundColor = new StyleColor(Color.gray); // Highlight
+                    child.style.backgroundColor = new StyleColor(HighlightColor); // Highlight
                 }
                 else
                 {
@@ -239,6 +246,8 @@ namespace ExtendedUiToolkit
                 }
             }
         }
+
+        private static readonly Color HighlightColor = new Color(0,.6f,1f,.4f);
 
         private void SetSelectedSuggestion(int index)
         {
