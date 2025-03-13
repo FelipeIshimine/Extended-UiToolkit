@@ -62,7 +62,7 @@ namespace ExtendedUiToolkit
         {
 	        hasFocus = false;
             // Hide the suggestions after a short delay to register click events
-            schedule.Execute(DisableSuggestions).ExecuteLater(1);
+            schedule.Execute(DisableSuggestions).ExecuteLater(100);
         }
 
         private void OnFocusIn(FocusInEvent evt)
@@ -208,7 +208,7 @@ namespace ExtendedUiToolkit
                 if (selectedSuggestionIndex >= 0 && selectedSuggestionIndex < currentSuggestions.Count)
                 {
                     SetSelectedSuggestion(selectedSuggestionIndex);
-                    evt.StopPropagation();
+                    evt.StopImmediatePropagation();
                 }
             }
         }
@@ -253,7 +253,7 @@ namespace ExtendedUiToolkit
         {
             textField.value = currentSuggestions[index];
             DisableSuggestions();
-
+            textField.schedule.Execute(textField.SelectAll).ExecuteLater(1);
         }
     }
 }
