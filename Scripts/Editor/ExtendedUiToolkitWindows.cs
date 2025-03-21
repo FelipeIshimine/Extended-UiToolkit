@@ -1,9 +1,6 @@
 using UnityEditor;
 
-namespace ExtendedUiToolkit.Editor
+public class ExtendedUiToolkitWindows : EditorWindow
 {
-	public class ExtendedUiToolkitWindows : EditorWindow
-	{
     
-	}
 }
