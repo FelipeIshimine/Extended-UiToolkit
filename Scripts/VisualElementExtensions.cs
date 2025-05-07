@@ -10,7 +10,10 @@ public static class VisualElementExtensions
         element.RegisterCallbackOnce<PointerDownEvent>(_=> completionSource.TrySetResult());
         try
         {
-            await completionSource.Awaitable;
+	        do
+	        {
+		        await Awaitable.NextFrameAsync(token);
+	        } while (!completionSource.Awaitable.IsCompleted);
         }
         finally
         {
@@ -18,6 +21,5 @@ public static class VisualElementExtensions
         }
     }
     
-    
-    
+    public static void LateFocus(this VisualElement element) => element.schedule.Execute(_=>element.Focus());
 }
