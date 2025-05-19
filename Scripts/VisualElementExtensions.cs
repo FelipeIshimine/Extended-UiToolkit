@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public static class VisualElementExtensions
 {
-	public static async Awaitable WaitForPress(this VisualElement element, CancellationToken token)
+	public static async Awaitable WaitForPressDown(this VisualElement element, CancellationToken token)
 	{
 		AwaitableCompletionSource completionSource = new AwaitableCompletionSource();
 		element.RegisterCallbackOnce<PointerDownEvent>(_ => completionSource.TrySetResult());
