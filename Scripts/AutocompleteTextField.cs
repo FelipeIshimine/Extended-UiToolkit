@@ -255,6 +255,8 @@ namespace ExtendedUiToolkit
             DisableSuggestions();
             textField.schedule.Execute(textField.SelectAll).ExecuteLater(1);
         }
+
+        public bool ContainsSuggestion(string key) => currentSuggestions.Contains(key);
     }
 }
 
