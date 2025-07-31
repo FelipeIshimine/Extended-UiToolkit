@@ -1,3 +1,4 @@
 {
-	"name": "ExtendedUiToolkit"
+	"name": "ExtendedUiToolkit",
+	"references":[ "GUID:79621526508c4c8e912f02bffabfc9af" , "Unity.InputSystem"]
 }

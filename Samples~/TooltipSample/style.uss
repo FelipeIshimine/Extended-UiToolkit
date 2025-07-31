@@ -1,0 +1,82 @@
+:root {
+}
+
+VisualElement.transition {
+    opacity: 0;
+    transition-duration: 0.3s, 0.3s;
+    scale: 0 0;
+    transition-property: opacity, scale;
+    transition-timing-function: ease, ease-in-back;
+}
+
+VisualElement {
+    opacity: 1;
+    transition-duration: 0.3s, 0.3s;
+    transition-property: opacity, scale;
+    transition-timing-function: ease, ease-out-back;
+}
+
+TooltipElement {
+    background-color: rgba(0, 0, 0, 0.81);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    border-bottom-right-radius: 24px;
+    border-bottom-left-radius: 24px;
+    border-top-width: 0;
+    border-right-width: 0;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    padding-top: 30px;
+    padding-right: 30px;
+    padding-bottom: 30px;
+    padding-left: 30px;
+    transition-property: opacity, scale, position, translate;
+    transition-duration: 0.25s, 0.25s, 0s, 0s;
+    transition-timing-function: ease-in, ease-out-back, ease, ease;
+    transition-delay: 0s, 0s, 0s, 0s;
+    opacity: 1;
+}
+
+TooltipElement > #Title {
+    font-size: 24px;
+    color: rgb(255, 195, 75);
+    -unity-text-align: upper-center;
+    -unity-font-style: bold;
+}
+
+TooltipElement > #Body {
+    color: rgb(219, 146, 44);
+    font-size: 20px;
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+}
+
+TooltipElement #Footer {
+    color: rgba(255, 255, 255, 0.94);
+    -unity-text-align: upper-right;
+    align-self: flex-end;
+}
+
+TooltipElement #AltFooter {
+}
+
+TooltipElement > #FooterContainer {
+    align-self: flex-end;
+}
+
+TooltipElement.transition {
+    opacity: 0;
+    transition-property: opacity, scale;
+    transition-timing-function: ease-in-back;
+    transition-duration: 0.25s, 0.25s;
+    scale: 0 0;
+}
+
+.transition {
+}

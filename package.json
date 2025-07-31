@@ -1,5 +1,12 @@
 {
   "name": "ishimine.extended-uitoolkit",
-  "version": "0.0.1",
-  "displayName": "Ishimine - Extended UiToolkit"
+  "version": "1.0.0",
+  "displayName": "Ishimine - Extended UiToolkit",
+  "samples":[
+    {
+      "displayName": "Core Tooltip Sample",
+      "description": "Core sample that includes a Style for the Tooltips",
+      "path": "Samples~/TooltipSample"
+    }
+  ]
 }
