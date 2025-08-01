@@ -27,7 +27,6 @@ namespace UI.Manipulators
             _generateTooltip = tooltipSource.GetTooltipInfo;
 
             _tooltip = new TooltipElement();
-            _tooltip.AddToClassList("transition");
             _tooltip.Hide(); // start hidden
         }
 
@@ -56,7 +55,8 @@ namespace UI.Manipulators
             TooltipLayer.Add(_tooltip);
 
             _scheduleItem = _tooltip.schedule.Execute(UpdateAnchor).Every(0);
-
+            _scheduleItem.Pause();
+            
             target.style.overflow = Overflow.Visible;
 
             _root = target;

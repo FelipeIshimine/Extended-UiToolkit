@@ -20,6 +20,7 @@ namespace Tooltips
             TooltipLayer.Add(_tooltip);
             tracking.Anchor ??= new WorldObjectAnchor(transform, Camera.main);
             _tooltip.SetTooltipInfo(tooltipSource.GetTooltipInfo());
+            _tooltip.Hide();
         }
 
         private void OnDestroy()

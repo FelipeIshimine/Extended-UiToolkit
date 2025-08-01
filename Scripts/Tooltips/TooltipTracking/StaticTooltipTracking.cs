@@ -26,6 +26,11 @@ public class StaticTooltipTracking : TooltipTracking
         Margin = offset;
     }
 
+    public static TooltipTracking DefaultMouseTop => new StaticTooltipTracking(new MousePositionAnchor(), TooltipPlacement.Top)
+    {
+        Margin = 25,
+    };
+
     public Vector2 GetMarginVector() => GetPlacementUnitVector(Placement) * Margin;
     public Vector2 GetPlacementUnitVector() => GetPlacementUnitVector(Placement);
 

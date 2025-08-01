@@ -57,9 +57,6 @@ namespace Tooltips
             Footer = "Neque porro quisquam est qui dolorem ipsum";
             AltFooter = "";
 
-            // hide on creation
-            //Hide();
-            Hide();
         }
 
         // —————————————
@@ -158,7 +155,6 @@ namespace Tooltips
             _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             try
             {
-                Debug.Log("SHOW");
                 await this.RemoveFromClassListAsync("transition",_cts.Token);
                 pickingMode = PickingMode.Position;
             }
@@ -190,7 +186,6 @@ namespace Tooltips
             _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             try
             {
-                Debug.Log("HIDE");
                 pickingMode = PickingMode.Ignore;
                 await this.AddToClassListAsync("transition",_cts.Token);
             }
@@ -199,7 +194,6 @@ namespace Tooltips
                 _cts.Cancel();
                 _cts = null;
             }
-            AddToClassList("transition");
         }
         
         internal void SetAnchorPosition(Vector2 panelPos)

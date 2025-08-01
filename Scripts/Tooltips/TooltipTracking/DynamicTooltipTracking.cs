@@ -24,6 +24,14 @@ namespace Tooltips
             Margin = offset;
         }
 
+        public static TooltipTracking DefaultDynamic => new DynamicTooltipTracking()
+        {
+            focusMode = DynamicTooltipTracking.OrientationFocusMode.LowerScreenCenter,
+            Margin = 25,
+            discretePosition = false
+        };
+        
+
         public override void ApplyTo(TooltipElement tooltipElement)
         {
             Vector2 screenPosition;
@@ -65,7 +73,6 @@ namespace Tooltips
                 normalizedLocalPosition = Snapping.Snap(normalizedLocalPosition, Vector2.one * .5f);
             }
             
-            Debug.Log($"normalizedLocalPosition:{normalizedLocalPosition}");
             
             tooltipElement.SetAnchorPosition(targetWorldCenter + rect.size * unitDir/2f + unitDir * Margin);
 
