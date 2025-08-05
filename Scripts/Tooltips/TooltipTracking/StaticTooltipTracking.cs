@@ -1,6 +1,7 @@
 using Tooltips;
 using TypeSelector;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class StaticTooltipTracking : TooltipTracking
@@ -40,6 +41,8 @@ public class StaticTooltipTracking : TooltipTracking
     public override void ApplyTo(TooltipElement tooltipElement)
     {
         var screenPosition = Anchor.GetScreenPosition();
+        screenPosition.y = Screen.height - screenPosition.y;
+        screenPosition = RuntimePanelUtils.ScreenToPanel(tooltipElement.panel, screenPosition);
         tooltipElement.SetAnchorPosition(screenPosition + GetMarginVector());
         tooltipElement.SetTranslateOffset(CalculateTranslationDelta());
     }

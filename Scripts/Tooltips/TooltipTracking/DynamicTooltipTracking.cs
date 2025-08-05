@@ -49,7 +49,9 @@ namespace Tooltips
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
+            screenPosition.y = Screen.height - screenPosition.y;
+            screenPosition = RuntimePanelUtils.ScreenToPanel(tooltipElement.panel, screenPosition);
             
             Rect rect = Target.contentRect;
             

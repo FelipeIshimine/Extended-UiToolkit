@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 namespace Tooltips
 {
+	[DefaultExecutionOrder(1)]
     public class WorldTooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         [TypeSelector, SerializeReference] private TooltipInfoSource tooltipSource;
@@ -13,11 +14,20 @@ namespace Tooltips
         public StaticTooltipTracking tracking = new StaticTooltipTracking(new WorldObjectAnchor(null,null));
 
         private TooltipElement       _tooltip;
+        public TooltipElement VisualElement => _tooltip; 
+        public void SetTooltipInfo(TooltipInfoSource tooltipInfoSource)
+        {
+	        tooltipSource = tooltipInfoSource;
+        }
+
+        private void Awake()
+        {
+	        _tooltip = new TooltipElement();
+	        TooltipLayer.Add(_tooltip);
+        }
 
         void Start()
         {
-            _tooltip = new TooltipElement();
-            TooltipLayer.Add(_tooltip);
             tracking.Anchor ??= new WorldObjectAnchor(transform, Camera.main);
             _tooltip.SetTooltipInfo(tooltipSource.GetTooltipInfo());
             _tooltip.Hide();
@@ -31,7 +41,7 @@ namespace Tooltips
         void Update()
         {
             // recompute screen pos every frame
-            if (_tooltip != null && _tooltip.IsVisible)
+            if (_tooltip != null && _tooltip.IsVisible && _tooltip.panel != null)
             {
                 _tooltip?.SetAnchorPosition(tracking);
             }

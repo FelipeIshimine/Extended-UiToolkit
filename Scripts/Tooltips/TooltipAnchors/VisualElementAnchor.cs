@@ -12,7 +12,10 @@ public class VisualElementAnchor : ITooltipAnchor
         this.Element = element;
     }
 
-    public Vector2 GetScreenPosition() => Element.worldBound.center;
+    public Vector2 GetScreenPosition()
+    {
+	    return Element.worldBound.center;
+    }
 
     public bool IsValid() => Element != null;
 }

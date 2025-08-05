@@ -13,7 +13,7 @@ public class MousePositionAnchor : ITooltipAnchor
             return _lastMousePosition;
         }
         _lastMousePosition = Pointer.current.position.ReadValue();
-        _lastMousePosition.y = Screen.height - _lastMousePosition.y;
+        //_lastMousePosition.y = Screen.height - _lastMousePosition.y;
         return _lastMousePosition;
     }
 
