@@ -11,6 +11,8 @@ public class StaticTooltipTracking : TooltipTracking
     [Min(10)]
     public float Margin = 20;
 
+    public float damping = 0;
+    
     public StaticTooltipTracking()
     {
     }
@@ -41,9 +43,17 @@ public class StaticTooltipTracking : TooltipTracking
     public override void ApplyTo(TooltipElement tooltipElement)
     {
         var screenPosition = Anchor.GetScreenPosition();
+
+        Vector2 pos = new Vector2(tooltipElement.style.left.value.value,tooltipElement.style.top.value.value);
+        
         screenPosition.y = Screen.height - screenPosition.y;
         screenPosition = RuntimePanelUtils.ScreenToPanel(tooltipElement.panel, screenPosition);
-        tooltipElement.SetAnchorPosition(screenPosition + GetMarginVector());
+
+        var targetPos = screenPosition + GetMarginVector();
+
+		targetPos = Vector2.Lerp(pos, targetPos, 1-damping);
+        
+        tooltipElement.SetAnchorPosition(targetPos);
         tooltipElement.SetTranslateOffset(CalculateTranslationDelta());
     }
 

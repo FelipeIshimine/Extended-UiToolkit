@@ -259,7 +259,6 @@ namespace Tooltips
         public void SetAnchorPosition(TooltipTracking tracking)
         {
             tracking.ApplyTo(this);
-          
         }
     }
 }
