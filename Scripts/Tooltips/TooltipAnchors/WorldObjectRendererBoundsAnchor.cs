@@ -3,10 +3,13 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 [System.Serializable]
-public class WorldObjectRendererBoundsAnchor : ITooltipAnchor
+public class WorldObjectRendererBoundsAnchor : ITooltipAnchor,ITooltipAnchorWithCamera
 {
 	[SerializeField] public Renderer target;
 	[SerializeField] private Camera camera;
+	[SerializeField, DirectionDropdown] private Vector2 dir;
+	public Camera Cam { get => camera; set => camera = value; }
+	
 	public WorldObjectRendererBoundsAnchor()
 	{
 	}
@@ -26,7 +29,7 @@ public class WorldObjectRendererBoundsAnchor : ITooltipAnchor
 	public Vector2 GetScreenPosition()
 	{
 		Bounds bounds = target.bounds;
-		Vector3 screenPos = camera.WorldToScreenPoint(bounds.center + bounds.extents.y * Vector3.up);
+		Vector3 screenPos = camera.WorldToScreenPoint(bounds.center + (Vector3)(bounds.extents * dir));
 		return new Vector2(screenPos.x, screenPos.y); // Flip Y
 	}
 }

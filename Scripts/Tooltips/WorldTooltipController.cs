@@ -28,7 +28,11 @@ namespace Tooltips
 
         void Start()
         {
-            tracking.Anchor ??= new WorldObjectAnchor(transform, Camera.main);
+            tracking.Anchor ??= new WorldObjectAnchor(transform, null);
+            if (tracking.Anchor is ITooltipAnchorWithCamera withCamera)
+            {
+	            withCamera.Cam = Camera.main;
+            }
             _tooltip.SetTooltipInfo(tooltipSource.GetTooltipInfo());
             _tooltip.Hide();
         }
@@ -51,36 +55,46 @@ namespace Tooltips
         {
             _tooltip?.Hide();
         }
-        public async void OnPointerEnter(PointerEventData eventData)
+        public void OnPointerEnter(PointerEventData eventData)
         {
             Debug.Log($"Pointer Enter at:{name}");
-            try
-            {
-                await _tooltip.ShowAsync(destroyCancellationToken);
-            }
-            catch (Exception e)
-            {
-                if (e is not OperationCanceledException)
-                {
-                    Debug.LogException(e);
-                }
-            }
+            Show();
         }
 
-        public async void OnPointerExit(PointerEventData eventData)
+        public void OnPointerExit(PointerEventData eventData)
         {
             Debug.Log($"Pointer Exit at:{name}");
-            try
-            {
-                await _tooltip.HideAsync(destroyCancellationToken);
-            }
-            catch (Exception e)
-            {
-                if (e is not OperationCanceledException)
-                {
-                    Debug.LogException(e);
-                }
-            }
+            Hide();
+        }
+
+        public async void Show()
+        {
+	        try
+	        {
+		        await _tooltip.ShowAsync(destroyCancellationToken);
+	        }
+	        catch (Exception e)
+	        {
+		        if (e is not OperationCanceledException)
+		        {
+			        Debug.LogException(e);
+		        }
+	        }
+        }
+
+        public async void Hide()
+        {
+	        try
+	        {
+		        await _tooltip.HideAsync(destroyCancellationToken);
+	        }
+	        catch (Exception e)
+	        {
+		        if (e is not OperationCanceledException)
+		        {
+			        Debug.LogException(e);
+		        }
+	        }
         }
     }
 }

@@ -1,0 +1,23 @@
+{
+    "name": "ExtendedUI.Scribe",
+    "rootNamespace": "",
+    "references": [
+        "GUID:68150f60e4d8b1e4eacc14a0076ee81b",
+        "GUID:9f3b3f9774c52f54e9ec362113fda595"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "ishimine.scribe",
+            "expression": "0.0.1",
+            "define": "HAS_SCRIBE"
+        }
+    ],
+    "noEngineReferences": false
+}

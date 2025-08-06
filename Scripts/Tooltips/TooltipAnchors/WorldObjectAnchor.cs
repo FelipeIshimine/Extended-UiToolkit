@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class WorldObjectAnchor : ITooltipAnchor
+public class WorldObjectAnchor : ITooltipAnchor,ITooltipAnchorWithCamera
 {
     [SerializeField] public Transform target;
     [SerializeField] private Camera camera;
+	public Camera Cam { get => camera; set => camera = value; }
 
     public WorldObjectAnchor()
     {

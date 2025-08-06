@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
 [System.Serializable]
-public class WorldCenterOfMassAnchor : ITooltipAnchor
+public class WorldCenterOfMassAnchor : ITooltipAnchor, ITooltipAnchorWithCamera
 {
 	[SerializeField] public Rigidbody2D target;
 	[SerializeField] private Camera camera;
+	public Camera Cam { get => camera; set => camera = value; }
+	
 	public WorldCenterOfMassAnchor()
 	{
 	}
@@ -22,4 +24,9 @@ public class WorldCenterOfMassAnchor : ITooltipAnchor
 	}
 
 	public Vector2 GetScreenPosition() => camera.WorldToScreenPoint(target.worldCenterOfMass);
+}
+
+public interface ITooltipAnchorWithCamera
+{
+	public Camera Cam { get; set; }
 }
