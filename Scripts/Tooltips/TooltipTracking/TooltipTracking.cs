@@ -1,5 +1,4 @@
-﻿using TypeSelector;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Tooltips
 {

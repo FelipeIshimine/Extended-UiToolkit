@@ -1,5 +1,4 @@
 using Tooltips;
-using TypeSelector;
 using UnityEngine;
 using UnityEngine.UIElements;
 

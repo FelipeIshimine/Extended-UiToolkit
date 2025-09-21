@@ -1,6 +1,5 @@
 ﻿using System;
 using Tooltips.Manipulators;
-using TypeSelector;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
