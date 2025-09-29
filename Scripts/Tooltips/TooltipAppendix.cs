@@ -1,9 +1,7 @@
 using System;
-using System.Threading;
 using Core.Data.Tooltips;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using Position = UnityEngine.UIElements.Position;
 
