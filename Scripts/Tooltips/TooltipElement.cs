@@ -117,6 +117,12 @@ namespace Tooltips
 
         public bool IsVisible => !ClassListContains("transition");
 
+        public bool IsEmpty => 
+	        string.IsNullOrEmpty(_titleLabel.text) && 
+	        string.IsNullOrEmpty(_bodyLabel.text) &&
+	        string.IsNullOrEmpty(_footerLabel.text) &&
+	        string.IsNullOrEmpty(_altFooter.text)                    ;
+
         // —————————————
         // RUNTIME HELPERS
         // —————————————

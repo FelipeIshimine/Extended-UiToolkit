@@ -21,8 +21,6 @@ namespace UI.Manipulators
 
         public TooltipManipulator(TooltipInfoSource tooltipSource, TooltipTracking tracking)
         {
-         
-            
             _tracking = tracking;
             _generateTooltip = tooltipSource.GetTooltipInfo;
 
@@ -51,6 +49,8 @@ namespace UI.Manipulators
             target.RegisterCallback<PointerEnterEvent>(OnPointerEnter);
             target.RegisterCallback<PointerLeaveEvent>(OnPointerLeave);
             target.RegisterCallback<DetachFromPanelEvent>(OnDetach);
+            target.RegisterCallback<FocusInEvent>(OnFocusIn);
+            target.RegisterCallback<FocusOutEvent>(OnFocusOut);
 
             TooltipLayer.Add(_tooltip);
 
@@ -63,6 +63,28 @@ namespace UI.Manipulators
             while (_root.parent != null)
                 _root = _root.parent;
         }
+
+        private void OnFocusOut(FocusOutEvent evt)
+        {
+	        if(evt.currentTarget == target)
+	        {
+		        _scheduleItem?.Pause();
+		        _tooltip.Hide();
+	        }
+        }
+
+        private void OnFocusIn(FocusInEvent evt)
+        {
+	        if (evt.currentTarget == target && !IsEmpty)
+	        {
+		        _scheduleItem?.Resume();
+		        UpdateAnchor();
+		        _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
+		        _tooltip.Show();
+	        }
+        }
+
+        public bool IsEmpty => _tooltip.IsEmpty;
 
         protected override void UnregisterCallbacksFromTarget()
         {
@@ -77,10 +99,13 @@ namespace UI.Manipulators
 
         private void OnPointerEnter(PointerEnterEvent evt)
         {
-            _scheduleItem?.Resume();
-            UpdateAnchor();
-            _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
-            _tooltip.Show();
+	        if(!IsEmpty)
+	        {
+		        _scheduleItem?.Resume();
+		        UpdateAnchor();
+		        _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
+		        _tooltip.Show();
+	        }
             
         }
 

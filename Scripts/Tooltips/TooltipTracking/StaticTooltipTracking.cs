@@ -45,7 +45,7 @@ public class StaticTooltipTracking : TooltipTracking
 
         Vector2 pos = new Vector2(tooltipElement.style.left.value.value,tooltipElement.style.top.value.value);
         
-        screenPosition.y = Screen.height - screenPosition.y;
+        //screenPosition.y = Screen.height - screenPosition.y;
         screenPosition = RuntimePanelUtils.ScreenToPanel(tooltipElement.panel, screenPosition);
 
         var targetPos = screenPosition + GetMarginVector();
