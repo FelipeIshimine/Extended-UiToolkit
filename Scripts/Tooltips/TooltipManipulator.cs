@@ -2,8 +2,6 @@
 using Core.Data.Tooltips;
 using Tooltips;
 using Tooltips.Manipulators;
-using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 namespace UI.Manipulators

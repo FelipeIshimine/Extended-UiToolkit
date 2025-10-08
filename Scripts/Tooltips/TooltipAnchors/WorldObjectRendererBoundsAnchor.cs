@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class WorldObjectRendererBoundsAnchor : ITooltipAnchor,ITooltipAnchorWithCamera
