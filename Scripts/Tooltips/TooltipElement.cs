@@ -117,11 +117,17 @@ namespace Tooltips
 
         public bool IsVisible => !ClassListContains("transition");
 
-        public bool IsEmpty => 
-	        string.IsNullOrEmpty(_titleLabel.text) && 
-	        string.IsNullOrEmpty(_bodyLabel.text) &&
-	        string.IsNullOrEmpty(_footerLabel.text) &&
-	        string.IsNullOrEmpty(_altFooter.text)                    ;
+        public bool IsEmpty
+        {
+	        get
+	        {
+		        Debug.Log($"> {_titleLabel.text} {_bodyLabel.text} {_footerLabel.text} {_altFooter.text}");
+		        return string.IsNullOrEmpty(_titleLabel.text) &&
+			        string.IsNullOrEmpty(_bodyLabel.text)     &&
+			        string.IsNullOrEmpty(_footerLabel.text)   &&
+			        string.IsNullOrEmpty(_altFooter.text);
+	        }
+        }
 
         // —————————————
         // RUNTIME HELPERS
@@ -131,6 +137,7 @@ namespace Tooltips
             Title  = info.Title;
             Body   = info.Body;
             Footer = info.Footer;
+            AltFooter = info.Footer;
         }
 
         public void SetExpandVisibility(bool visible)

@@ -2,16 +2,20 @@
 using Core.Data.Tooltips;
 using Tooltips;
 using Tooltips.Manipulators;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace UI.Manipulators
 {
     public class TooltipManipulator : MouseManipulator
     {
+	    public Action OnShow;
+	    public Action OnHide;
         private readonly TooltipElement _tooltip;
         private Func<TooltipData> _generateTooltip;
         private IVisualElementScheduledItem _scheduleItem;
         private VisualElement _root;
+        public TooltipElement Tooltip => _tooltip;
 
         private TooltipTracking _tracking;
 
@@ -66,8 +70,7 @@ namespace UI.Manipulators
         {
 	        if(evt.currentTarget == target)
 	        {
-		        _scheduleItem?.Pause();
-		        _tooltip.Hide();
+		        Hide();
 	        }
         }
 
@@ -75,11 +78,23 @@ namespace UI.Manipulators
         {
 	        if (evt.currentTarget == target && !IsEmpty)
 	        {
+		        TryShow();
+	        }
+        }
+
+        private bool TryShow()
+        {
+	        Debug.Log("TryShow");
+	        _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
+	        if (!IsEmpty)
+	        {
 		        _scheduleItem?.Resume();
 		        UpdateAnchor();
-		        _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
 		        _tooltip.Show();
+		        OnShow?.Invoke();
+		        return true;
 	        }
+	        return false;
         }
 
         public bool IsEmpty => _tooltip.IsEmpty;
@@ -97,20 +112,22 @@ namespace UI.Manipulators
 
         private void OnPointerEnter(PointerEnterEvent evt)
         {
-	        if(!IsEmpty)
+	        if (evt.currentTarget == target && !IsEmpty)
 	        {
-		        _scheduleItem?.Resume();
-		        UpdateAnchor();
-		        _tooltip.SetTooltipInfo(_generateTooltip.Invoke());
-		        _tooltip.Show();
+		        TryShow();
 	        }
-            
         }
 
         private void OnPointerLeave(PointerLeaveEvent evt)
         {
-            _scheduleItem?.Pause();
-            _tooltip.Hide();
+	        Hide();
+        }
+
+        private void Hide()
+        {
+	        _scheduleItem?.Pause();
+	        _tooltip.Hide();
+	        OnHide?.Invoke();
         }
 
         private void OnDetach(DetachFromPanelEvent evt) => _tooltip.Hide();

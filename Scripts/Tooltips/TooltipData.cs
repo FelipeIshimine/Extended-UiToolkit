@@ -8,6 +8,7 @@ namespace Core.Data.Tooltips
 		public string Title;
 		public string Body;
 		public string Footer;
+		public string AltFooter;
 		
 		public bool IsEmpty =>string.IsNullOrEmpty(Body);
 
@@ -25,6 +26,10 @@ namespace Core.Data.Tooltips
 			if (!string.IsNullOrEmpty(Footer))
 			{
 				builder.AppendLine($"<i>{Footer}</i>");
+			}
+			if (!string.IsNullOrEmpty(AltFooter))
+			{
+				builder.AppendLine($"<i>{AltFooter}</i>");
 			}
 			return builder.ToString().Trim();
 		}
