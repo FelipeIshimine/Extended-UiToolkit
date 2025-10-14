@@ -26,6 +26,6 @@ public class WorldObjectAnchor : ITooltipAnchor,ITooltipAnchorWithCamera
     public Vector2 GetScreenPosition()
     {
         Vector3 screenPos = camera.WorldToScreenPoint(target.position);
-        return new Vector2(screenPos.x, screenPos.y); // Flip Y
+        return new Vector2(screenPos.x, Screen.height -screenPos.y); // Flip Y
     }
 }

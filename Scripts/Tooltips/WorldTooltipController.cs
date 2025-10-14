@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Tooltips.Manipulators;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 namespace Tooltips
 {
@@ -80,7 +82,8 @@ namespace Tooltips
 		        }
 	        }
         }
-
+       
+        
         public async void Hide()
         {
 	        try

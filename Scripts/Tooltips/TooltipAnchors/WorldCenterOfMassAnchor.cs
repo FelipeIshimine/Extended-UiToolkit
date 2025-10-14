@@ -23,7 +23,12 @@ public class WorldCenterOfMassAnchor : ITooltipAnchor, ITooltipAnchorWithCamera
 		this.camera = camera;
 	}
 
-	public Vector2 GetScreenPosition() => camera.WorldToScreenPoint(target.worldCenterOfMass);
+	public Vector2 GetScreenPosition()
+	{
+		var pos = camera.WorldToScreenPoint(target.worldCenterOfMass);
+		pos.y = Screen.height - pos.y;
+		return pos;
+	}
 }
 
 public interface ITooltipAnchorWithCamera

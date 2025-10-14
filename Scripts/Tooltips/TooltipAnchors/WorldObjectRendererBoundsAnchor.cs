@@ -28,6 +28,6 @@ public class WorldObjectRendererBoundsAnchor : ITooltipAnchor,ITooltipAnchorWith
 	{
 		Bounds bounds = target.bounds;
 		Vector3 screenPos = camera.WorldToScreenPoint(bounds.center + (Vector3)(bounds.extents * dir));
-		return new Vector2(screenPos.x, screenPos.y); // Flip Y
+		return new Vector2(screenPos.x, Screen.height -screenPos.y); // Flip Y
 	}
 }
