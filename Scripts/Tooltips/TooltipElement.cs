@@ -12,6 +12,7 @@ namespace Tooltips
         private readonly Label _titleLabel;
         private readonly Label _bodyLabel;
         private readonly Label _footerLabel;
+        private readonly VisualElement _overlay;
         //Used for "EXPAND ICON" for example. Hold ALT to Expand (get more info)
         private readonly Label _altFooter;
         private CancellationTokenSource _cts;
@@ -56,6 +57,13 @@ namespace Tooltips
             Body = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras sed vulputate enim, a eleifend risus. Pellentesque habitant morbi tristique";
             Footer = "Neque porro quisquam est qui dolorem ipsum";
             AltFooter = "";
+
+            _overlay = new VisualElement()
+            {
+	            name = "Overlay"
+            };
+            _overlay.AddToClassList("tooltip-overlay");
+            Add(_overlay);
 
         }
 
