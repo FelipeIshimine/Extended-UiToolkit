@@ -37,13 +37,13 @@ public class TooltipLayer : MonoBehaviour
 
     public static void Add(VisualElement tooltipContainer)
     {
-        Debug.Log("ADD");
+        //Debug.Log("ADD");
         Instance._root.Add(tooltipContainer);
     }
 
     public static void Remove(VisualElement element)
     {
-        Debug.Log("REMOVE");
+        //Debug.Log("REMOVE");
         if (Instance)
         {
             Instance._root.Remove(element);
