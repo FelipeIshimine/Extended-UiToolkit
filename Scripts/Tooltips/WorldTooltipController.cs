@@ -19,11 +19,16 @@ namespace Tooltips
         public void SetTooltipInfo(TooltipInfoSource tooltipInfoSource)
         {
 	        tooltipSource = tooltipInfoSource;
+	        if (!_tooltip.ClassListContains("transition"))
+	        {
+		        _tooltip.SetTooltipInfo(tooltipSource.GetTooltipInfo());
+	        }
         }
 
         private void Awake()
         {
 	        _tooltip = new TooltipElement();
+	        _tooltip.AddToClassList("transition");
 	        TooltipLayer.Add(_tooltip);
         }
 
