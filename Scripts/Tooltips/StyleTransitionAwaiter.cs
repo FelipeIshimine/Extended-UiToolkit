@@ -38,13 +38,10 @@ public static class StyleTransitionAwaiter
             maxDuration = Mathf.Max(maxDuration, dur.value); // value is in seconds
 
         // If no transition, just yield one more frame
-        if (maxDuration <= 0f)
+        while (maxDuration > 0)
         {
+	        maxDuration -= Time.unscaledDeltaTime;
             await Awaitable.NextFrameAsync(ct);
-            return;
         }
-
-        // Wait for duration
-        await Awaitable.WaitForSecondsAsync(maxDuration, ct);
     }
 }
