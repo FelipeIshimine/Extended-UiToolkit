@@ -23,8 +23,23 @@ namespace Tooltips
 	        {
 		        _tooltip.SetTooltipInfo(tooltipSource.GetTooltipInfo());
 	        }
+
+	        foreach (var element in _tooltip.Query<TextElement>().Build())
+	        {
+				SetLanguageClass(element,ScribeManager.Active.FontName);
+	        }
         }
 
+        private void SetLanguageClass(TextElement text, string languageCode)
+        {
+	        var activeLanguage = text.GetClasses().Where(x => x.Contains("lang-")).ToArray();
+	        foreach (string s in activeLanguage)
+	        {
+		        text.RemoveFromClassList(s);
+	        }
+	        text.AddToClassList($"lang-{languageCode}");
+        }
+        
         private void Awake()
         {
 	        _tooltip = new TooltipElement();

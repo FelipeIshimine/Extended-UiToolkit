@@ -1,4 +1,4 @@
 {
 	"name": "ExtendedUiToolkit",
-	"references":[ "GUID:79621526508c4c8e912f02bffabfc9af" , "Unity.InputSystem", "GUID:dbdda89227df49c98f140aefd6dfa59b"]
+	"references":[ "GUID:79621526508c4c8e912f02bffabfc9af" , "Unity.InputSystem", "GUID:dbdda89227df49c98f140aefd6dfa59b", "GUID:68150f60e4d8b1e4eacc14a0076ee81b"]
 }
