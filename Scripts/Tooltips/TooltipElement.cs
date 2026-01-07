@@ -129,7 +129,7 @@ namespace Tooltips
         {
 	        get
 	        {
-		        Debug.Log($"> {_titleLabel.text} {_bodyLabel.text} {_footerLabel.text} {_altFooter.text}");
+		        //Debug.Log($"> {_titleLabel.text} {_bodyLabel.text} {_footerLabel.text} {_altFooter.text}");
 		        return string.IsNullOrEmpty(_titleLabel.text) &&
 			        string.IsNullOrEmpty(_bodyLabel.text)     &&
 			        string.IsNullOrEmpty(_footerLabel.text)   &&
