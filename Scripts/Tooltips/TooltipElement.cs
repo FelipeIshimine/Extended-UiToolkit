@@ -176,7 +176,7 @@ namespace Tooltips
             _cts = CancellationTokenSource.CreateLinkedTokenSource(token);
             try
             {
-                await this.RemoveFromClassListAsync("transition",_cts.Token);
+                await this.RemoveFromClassListAndWaitAsync("transition",_cts.Token);
                 pickingMode = PickingMode.Position;
             }
             finally
@@ -208,7 +208,7 @@ namespace Tooltips
             try
             {
                 pickingMode = PickingMode.Ignore;
-                await this.AddToClassListAsync("transition",_cts.Token);
+                await this.AddToClassListAndWaitAsync("transition",_cts.Token);
             }
             finally
             {
