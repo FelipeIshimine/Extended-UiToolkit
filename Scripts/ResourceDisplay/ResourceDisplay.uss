@@ -1,0 +1,36 @@
+/* ── ResourceRequirement.uss ─────────────────────────────────────────────── */
+
+.resource-display {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    column-gap: 6px;
+    padding: 2px 6px;
+}
+
+/* Icon -------------------------------------------------------------------- */
+.resource-display__icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Label ------------------------------------------------------------------- */
+.resource-display__label {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: rgb(220, 220, 220);
+    flex-shrink: 0;
+}
+
+/* Sufficiency modifiers --------------------------------------------------- */
+.resource-display--sufficient .resource-display__label {
+    color: rgb(100, 220, 100);   /* green – you have enough */
+}
+
+.resource-display--insufficient .resource-display__label {
+    color: rgb(220, 80, 80);     /* red – you don't have enough */
+}
